@@ -1,0 +1,2 @@
+python FamilyGuy.py
+pause
