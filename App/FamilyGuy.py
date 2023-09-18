@@ -21,18 +21,14 @@ def getFamilyGuyEpisodes():
 
     episodes = list(filter(lambda x: x.find(class_="summary")!=None, soup.find_all(class_="vevent", style="text-align:center;background:inherit")))
 
-    episodelist = []
-
-    for i in episodes:
-        name = i.find(class_="summary")  
-        name = hasChild(name)
-        season = i.find_previous(["h3"]).find(class_="mw-headline").string
-        episode = i.find(["td"]).string
-        epdata = episodeData(str(name), season, episode)
-        episodelist.append(epdata)
+    episodelist = [
+        episodeData(
+             str(hasChild(i.find(class_="summary"))),
+             i.find_previous(["h3"]).find(class_="mw-headline").string, 
+             i.find(["td"]).string
+        )for i in episodes
+    ]
 
     return episodelist[random.randrange(len(episodelist))]
-
-
 
 print(f"Random Episode is:\n {getFamilyGuyEpisodes()}")
